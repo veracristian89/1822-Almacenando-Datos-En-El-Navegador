@@ -46,7 +46,14 @@ form {
   padding: 10px;
   border: 1px solid #eee;
   outline: none;
-  width: 65%;
+  width: 35%;
+}
+
+.imputDate{
+  border: none;
+  padding: 10px;
+  border: 1px solid #eee;
+  outline: none;
 }
 
 .inputForm::placeholder {
