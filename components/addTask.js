@@ -1,5 +1,6 @@
 import checkComplete from './checkComplete.js';
 import deleteIcon from './deleteIcon.js';
+import { displayTasks } from './readTasks.js';
 
 export const addTask = (evento) => {
     evento.preventDefault();
@@ -11,6 +12,10 @@ export const addTask = (evento) => {
     const value = input.value;
     const date = calendar.value;
     const dateFormat = moment(date).format("DD/MM/YYYY");
+
+    if (value == "" || date == ""){
+      return;
+    }
     
     input.value = '';
     calendar.value= '';
@@ -20,33 +25,32 @@ export const addTask = (evento) => {
         dateFormat
     };
 
+    list.innerHTML = ""
+
     const taskList = JSON.parse(localStorage.getItem("tasks")) || [];
     taskList.push(taskObj);
     localStorage.setItem("tasks", JSON.stringify(taskList));
 
-    
+    displayTasks();
 
-    const task =  createTask(taskObj);
-    list.appendChild(task);
-  }
+  };
   
-  const createTask = ({value, dateFormat}) => {
+  export const createTask = ({value, dateFormat}) => {
     const task = document.createElement('li');
-    task.classList.add('card');
+          task.classList.add('card');
+
     const taskContent = document.createElement('div');
     
-  
-  
     const titleTask = document.createElement('span');
-    titleTask.classList.add('task');
-    titleTask.innerText = value;
-    taskContent.appendChild(checkComplete());
-    taskContent.appendChild(titleTask);
+          titleTask.classList.add('task');
+          titleTask.innerText = value;
+          taskContent.appendChild(checkComplete());
+          taskContent.appendChild(titleTask);
     // task.innerHTML = content;
     const dateElemente = document.createElement("span");
-    dateElemente.innerHTML = dateFormat;
-    task.appendChild(taskContent);
-    task.appendChild(dateElemente);
-    task.appendChild(deleteIcon());
+          dateElemente.innerHTML = dateFormat;
+          task.appendChild(taskContent);
+          task.appendChild(dateElemente);
+          task.appendChild(deleteIcon());
     return task;
   };
